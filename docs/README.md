@@ -1,22 +1,22 @@
-# Task Master Documentation
+# Task Master 문서
 
-Welcome to the Task Master documentation. Use the links below to navigate to the information you need:
+Task Master 문서에 오신 것을 환영합니다. 아래 링크를 사용하여 필요한 정보로 이동하세요:
 
-## Getting Started
+## 시작하기
 
-- [Configuration Guide](configuration.md) - Set up environment variables and customize Task Master
-- [Tutorial](tutorial.md) - Step-by-step guide to getting started with Task Master
+- [설정 가이드](configuration.md) - 환경 변수 설정 및 Task Master 사용자 정의
+- [튜토리얼](tutorial.md) - Task Master 시작을 위한 단계별 가이드
 
-## Reference
+## 참조
 
-- [Command Reference](command-reference.md) - Complete list of all available commands
-- [Task Structure](task-structure.md) - Understanding the task format and features
+- [명령어 참조](command-reference.md) - 사용 가능한 모든 명령어 목록
+- [태스크 구조](task-structure.md) - 태스크 형식 및 기능 이해
 
-## Examples & Licensing
+## 예제 및 라이선스
 
-- [Example Interactions](examples.md) - Common Cursor AI interaction examples
-- [Licensing Information](licensing.md) - Detailed information about the license
+- [상호작용 예제](examples.md) - 일반적인 Cursor AI 상호작용 예제
+- [라이선스 정보](licensing.md) - 라이선스에 대한 자세한 정보
 
-## Need More Help?
+## 추가 도움이 필요하신가요?
 
-If you can't find what you're looking for in these docs, please check the [main README](../README.md) or visit our [GitHub repository](https://github.com/eyaltoledano/claude-task-master).
+이 문서에서 찾고 있는 내용이 없다면, [메인 README](../README.md)를 확인하거나 [GitHub 저장소](https://github.com/eyaltoledano/claude-task-master)를 방문하세요.

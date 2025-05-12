@@ -1,238 +1,238 @@
-# Task Master Command Reference
+# Task Master 명령어 참조
 
-Here's a comprehensive reference of all available commands:
+사용 가능한 모든 명령어에 대한 포괄적인 참조입니다:
 
-## Parse PRD
+## PRD 파싱
 
 ```bash
-# Parse a PRD file and generate tasks
+# PRD 파일을 파싱하고 태스크 생성
 task-master parse-prd <prd-file.txt>
 
-# Limit the number of tasks generated
+# 생성된 태스크 수 제한
 task-master parse-prd <prd-file.txt> --num-tasks=10
 ```
 
-## List Tasks
+## 태스크 목록
 
 ```bash
-# List all tasks
+# 모든 태스크 나열
 task-master list
 
-# List tasks with a specific status
+# 특정 상태의 태스크 나열
 task-master list --status=<status>
 
-# List tasks with subtasks
+# 서브태스크가 있는 태스크 나열
 task-master list --with-subtasks
 
-# List tasks with a specific status and include subtasks
+# 특정 상태의 태스크와 서브태스크 포함하여 나열
 task-master list --status=<status> --with-subtasks
 ```
 
-## Show Next Task
+## 다음 태스크 표시
 
 ```bash
-# Show the next task to work on based on dependencies and status
+# 종속성 및 상태에 따라 다음 작업할 태스크 표시
 task-master next
 ```
 
-## Show Specific Task
+## 특정 태스크 표시
 
 ```bash
-# Show details of a specific task
+# 특정 태스크의 세부 정보 표시
 task-master show <id>
-# or
+# 또는
 task-master show --id=<id>
 
-# View a specific subtask (e.g., subtask 2 of task 1)
+# 특정 서브태스크 보기 (예: 태스크 1의 서브태스크 2)
 task-master show 1.2
 ```
 
-## Update Tasks
+## 태스크 업데이트
 
 ```bash
-# Update tasks from a specific ID and provide context
+# 특정 ID부터 태스크를 업데이트하고 컨텍스트 제공
 task-master update --from=<id> --prompt="<prompt>"
 
-# Update tasks using research role
+# 연구 역할을 사용하여 태스크 업데이트
 task-master update --from=<id> --prompt="<prompt>" --research
 ```
 
-## Update a Specific Task
+## 특정 태스크 업데이트
 
 ```bash
-# Update a single task by ID with new information
+# ID로 단일 태스크를 새 정보로 업데이트
 task-master update-task --id=<id> --prompt="<prompt>"
 
-# Use research-backed updates
+# 연구 기반 업데이트 사용
 task-master update-task --id=<id> --prompt="<prompt>" --research
 ```
 
-## Update a Subtask
+## 서브태스크 업데이트
 
 ```bash
-# Append additional information to a specific subtask
+# 특정 서브태스크에 추가 정보 추가
 task-master update-subtask --id=<parentId.subtaskId> --prompt="<prompt>"
 
-# Example: Add details about API rate limiting to subtask 2 of task 5
+# 예시: 태스크 5의 서브태스크 2에 API 속도 제한에 대한 세부 정보 추가
 task-master update-subtask --id=5.2 --prompt="Add rate limiting of 100 requests per minute"
 
-# Use research-backed updates
+# 연구 기반 업데이트 사용
 task-master update-subtask --id=<parentId.subtaskId> --prompt="<prompt>" --research
 ```
 
-Unlike the `update-task` command which replaces task information, the `update-subtask` command _appends_ new information to the existing subtask details, marking it with a timestamp. This is useful for iteratively enhancing subtasks while preserving the original content.
+`update-task` 명령이 태스크 정보를 대체하는 것과 달리, `update-subtask` 명령은 기존 서브태스크 세부 정보에 새 정보를 _추가_하고 타임스탬프로 표시합니다. 이는 원본 내용을 보존하면서 서브태스크를 반복적으로 개선하는 데 유용합니다.
 
-## Generate Task Files
+## 태스크 파일 생성
 
 ```bash
-# Generate individual task files from tasks.json
+# tasks.json에서 개별 태스크 파일 생성
 task-master generate
 ```
 
-## Set Task Status
+## 태스크 상태 설정
 
 ```bash
-# Set status of a single task
+# 단일 태스크의 상태 설정
 task-master set-status --id=<id> --status=<status>
 
-# Set status for multiple tasks
+# 여러 태스크의 상태 설정
 task-master set-status --id=1,2,3 --status=<status>
 
-# Set status for subtasks
+# 서브태스크의 상태 설정
 task-master set-status --id=1.1,1.2 --status=<status>
 ```
 
-When marking a task as "done", all of its subtasks will automatically be marked as "done" as well.
+태스크를 "done"으로 표시하면 모든 서브태스크도 자동으로 "done"으로 표시됩니다.
 
-## Expand Tasks
+## 태스크 확장
 
 ```bash
-# Expand a specific task with subtasks
+# 특정 태스크를 서브태스크로 확장
 task-master expand --id=<id> --num=<number>
 
-# Expand with additional context
+# 추가 컨텍스트로 확장
 task-master expand --id=<id> --prompt="<context>"
 
-# Expand all pending tasks
+# 모든 대기 중인 태스크 확장
 task-master expand --all
 
-# Force regeneration of subtasks for tasks that already have them
+# 이미 서브태스크가 있는 태스크의 서브태스크 강제 재생성
 task-master expand --all --force
 
-# Research-backed subtask generation for a specific task
+# 특정 태스크에 대한 연구 기반 서브태스크 생성
 task-master expand --id=<id> --research
 
-# Research-backed generation for all tasks
+# 모든 태스크에 대한 연구 기반 생성
 task-master expand --all --research
 ```
 
-## Clear Subtasks
+## 서브태스크 지우기
 
 ```bash
-# Clear subtasks from a specific task
+# 특정 태스크에서 서브태스크 지우기
 task-master clear-subtasks --id=<id>
 
-# Clear subtasks from multiple tasks
+# 여러 태스크에서 서브태스크 지우기
 task-master clear-subtasks --id=1,2,3
 
-# Clear subtasks from all tasks
+# 모든 태스크에서 서브태스크 지우기
 task-master clear-subtasks --all
 ```
 
-## Analyze Task Complexity
+## 태스크 복잡성 분석
 
 ```bash
-# Analyze complexity of all tasks
+# 모든 태스크의 복잡성 분석
 task-master analyze-complexity
 
-# Save report to a custom location
+# 사용자 지정 위치에 보고서 저장
 task-master analyze-complexity --output=my-report.json
 
-# Use a specific LLM model
+# 특정 LLM 모델 사용
 task-master analyze-complexity --model=claude-3-opus-20240229
 
-# Set a custom complexity threshold (1-10)
+# 사용자 지정 복잡성 임계값 설정 (1-10)
 task-master analyze-complexity --threshold=6
 
-# Use an alternative tasks file
+# 대체 태스크 파일 사용
 task-master analyze-complexity --file=custom-tasks.json
 
-# Use Perplexity AI for research-backed complexity analysis
+# 연구 기반 복잡성 분석을 위해 Perplexity AI 사용
 task-master analyze-complexity --research
 ```
 
-## View Complexity Report
+## 복잡성 보고서 보기
 
 ```bash
-# Display the task complexity analysis report
+# 태스크 복잡성 분석 보고서 표시
 task-master complexity-report
 
-# View a report at a custom location
+# 사용자 지정 위치의 보고서 보기
 task-master complexity-report --file=my-report.json
 ```
 
-## Managing Task Dependencies
+## 태스크 종속성 관리
 
 ```bash
-# Add a dependency to a task
+# 태스크에 종속성 추가
 task-master add-dependency --id=<id> --depends-on=<id>
 
-# Remove a dependency from a task
+# 태스크에서 종속성 제거
 task-master remove-dependency --id=<id> --depends-on=<id>
 
-# Validate dependencies without fixing them
+# 수정하지 않고 종속성 검증
 task-master validate-dependencies
 
-# Find and fix invalid dependencies automatically
+# 잘못된 종속성 자동으로 찾아 수정
 task-master fix-dependencies
 ```
 
-## Add a New Task
+## 새 태스크 추가
 
 ```bash
-# Add a new task using AI (main role)
+# AI를 사용하여 새 태스크 추가 (주 역할)
 task-master add-task --prompt="Description of the new task"
 
-# Add a new task using AI (research role)
+# AI를 사용하여 새 태스크 추가 (연구 역할)
 task-master add-task --prompt="Description of the new task" --research
 
-# Add a task with dependencies
+# 종속성이 있는 태스크 추가
 task-master add-task --prompt="Description" --dependencies=1,2,3
 
-# Add a task with priority
+# 우선순위가 있는 태스크 추가
 task-master add-task --prompt="Description" --priority=high
 ```
 
-## Initialize a Project
+## 프로젝트 초기화
 
 ```bash
-# Initialize a new project with Task Master structure
+# Task Master 구조로 새 프로젝트 초기화
 task-master init
 ```
 
-## Configure AI Models
+## AI 모델 구성
 
 ```bash
-# View current AI model configuration and API key status
+# 현재 AI 모델 구성 및 API 키 상태 보기
 task-master models
 
-# Set the primary model for generation/updates (provider inferred if known)
+# 생성/업데이트를 위한 기본 모델 설정 (알려진 경우 제공자 추론됨)
 task-master models --set-main=claude-3-opus-20240229
 
-# Set the research model
+# 연구 모델 설정
 task-master models --set-research=sonar-pro
 
-# Set the fallback model
+# 대체 모델 설정
 task-master models --set-fallback=claude-3-haiku-20240307
 
-# Set a custom Ollama model for the main role
+# 주 역할을 위한 사용자 지정 Ollama 모델 설정
 task-master models --set-main=my-local-llama --ollama
 
-# Set a custom OpenRouter model for the research role
+# 연구 역할을 위한 사용자 지정 OpenRouter 모델 설정
 task-master models --set-research=google/gemini-pro --openrouter
 
-# Run interactive setup to configure models, including custom ones
+# 사용자 지정 모델을 포함한 모델을 구성하기 위한 대화형 설정 실행
 task-master models --setup
 ```
 
-Configuration is stored in `.taskmasterconfig` in your project root. API keys are still managed via `.env` or MCP configuration. Use `task-master models` without flags to see available built-in models. Use `--setup` for a guided experience.
+구성은 프로젝트 루트의 `.taskmasterconfig`에 저장됩니다. API 키는 여전히 `.env` 또는 MCP 구성을 통해 관리됩니다. 사용 가능한 내장 모델을 보려면 플래그 없이 `task-master models`를 사용하세요. 안내형 경험을 위해 `--setup`을 사용하세요.

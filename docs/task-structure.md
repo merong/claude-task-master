@@ -1,139 +1,139 @@
-# Task Structure
+# 태스크 구조
 
-Tasks in Task Master follow a specific format designed to provide comprehensive information for both humans and AI assistants.
+Task Master의 태스크는 사람과 AI 어시스턴트 모두에게 포괄적인 정보를 제공하도록 설계된 특정 형식을 따릅니다.
 
-## Task Fields in tasks.json
+## tasks.json의 태스크 필드
 
-Tasks in tasks.json have the following structure:
+tasks.json의 태스크는 다음 구조를 가집니다:
 
-- `id`: Unique identifier for the task (Example: `1`)
-- `title`: Brief, descriptive title of the task (Example: `"Initialize Repo"`)
-- `description`: Concise description of what the task involves (Example: `"Create a new repository, set up initial structure."`)
-- `status`: Current state of the task (Example: `"pending"`, `"done"`, `"deferred"`)
-- `dependencies`: IDs of tasks that must be completed before this task (Example: `[1, 2]`)
-  - Dependencies are displayed with status indicators (✅ for completed, ⏱️ for pending)
-  - This helps quickly identify which prerequisite tasks are blocking work
-- `priority`: Importance level of the task (Example: `"high"`, `"medium"`, `"low"`)
-- `details`: In-depth implementation instructions (Example: `"Use GitHub client ID/secret, handle callback, set session token."`)
-- `testStrategy`: Verification approach (Example: `"Deploy and call endpoint to confirm 'Hello World' response."`)
-- `subtasks`: List of smaller, more specific tasks that make up the main task (Example: `[{"id": 1, "title": "Configure OAuth", ...}]`)
+- `id`: 태스크의 고유 식별자 (예: `1`)
+- `title`: 태스크의 간결한 설명적 제목 (예: `"Initialize Repo"`)
+- `description`: 태스크가 포함하는 내용에 대한 간결한 설명 (예: `"Create a new repository, set up initial structure."`)
+- `status`: 태스크의 현재 상태 (예: `"pending"`, `"done"`, `"deferred"`)
+- `dependencies`: 이 태스크 전에 완료해야 하는 태스크의 ID (예: `[1, 2]`)
+  - 종속성은 상태 표시기와 함께 표시됩니다 (완료된 항목은 ✅, 대기 중인 항목은 ⏱️)
+  - 이는 작업을 차단하는 전제 조건 태스크를 빠르게 식별하는 데 도움이 됩니다
+- `priority`: 태스크의 중요도 수준 (예: `"high"`, `"medium"`, `"low"`)
+- `details`: 심층적인 구현 지침 (예: `"Use GitHub client ID/secret, handle callback, set session token."`)
+- `testStrategy`: 검증 접근 방식 (예: `"Deploy and call endpoint to confirm 'Hello World' response."`)
+- `subtasks`: 주요 태스크를 구성하는 더 작고 구체적인 태스크 목록 (예: `[{"id": 1, "title": "Configure OAuth", ...}]`)
 
-## Task File Format
+## 태스크 파일 형식
 
-Individual task files follow this format:
+개별 태스크 파일은 다음 형식을 따릅니다:
 
 ```
 # Task ID: <id>
 # Title: <title>
 # Status: <status>
-# Dependencies: <comma-separated list of dependency IDs>
+# Dependencies: <쉼표로 구분된 종속성 ID 목록>
 # Priority: <priority>
-# Description: <brief description>
+# Description: <간단한 설명>
 # Details:
-<detailed implementation notes>
+<자세한 구현 참고 사항>
 
 # Test Strategy:
-<verification approach>
+<검증 접근 방식>
 ```
 
-## Features in Detail
+## 상세 기능
 
-### Analyzing Task Complexity
+### 태스크 복잡성 분석
 
-The `analyze-complexity` command:
+`analyze-complexity` 명령은 다음을 수행합니다:
 
-- Analyzes each task using AI to assess its complexity on a scale of 1-10
-- Recommends optimal number of subtasks based on configured DEFAULT_SUBTASKS
-- Generates tailored prompts for expanding each task
-- Creates a comprehensive JSON report with ready-to-use commands
-- Saves the report to scripts/task-complexity-report.json by default
+- AI를 사용하여 각 태스크를 분석하여 1-10 척도로 복잡성을 평가
+- 구성된 DEFAULT_SUBTASKS를 기반으로 최적의 서브태스크 수 권장
+- 각 태스크 확장을 위한 맞춤형 프롬프트 생성
+- 사용 가능한 명령이 포함된 포괄적인 JSON 보고서 생성
+- 기본적으로 보고서를 scripts/task-complexity-report.json에 저장
 
-The generated report contains:
+생성된 보고서에는 다음이 포함됩니다:
 
-- Complexity analysis for each task (scored 1-10)
-- Recommended number of subtasks based on complexity
-- AI-generated expansion prompts customized for each task
-- Ready-to-run expansion commands directly within each task analysis
+- 각 태스크에 대한 복잡성 분석 (1-10점 평가)
+- 복잡성에 기반한 권장 서브태스크 수
+- 각 태스크에 맞춤화된 AI 생성 확장 프롬프트
+- 각 태스크 분석 내에 직접 실행 가능한 확장 명령
 
-### Viewing Complexity Report
+### 복잡성 보고서 보기
 
-The `complexity-report` command:
+`complexity-report` 명령은 다음을 수행합니다:
 
-- Displays a formatted, easy-to-read version of the complexity analysis report
-- Shows tasks organized by complexity score (highest to lowest)
-- Provides complexity distribution statistics (low, medium, high)
-- Highlights tasks recommended for expansion based on threshold score
-- Includes ready-to-use expansion commands for each complex task
-- If no report exists, offers to generate one on the spot
+- 복잡성 분석 보고서의 형식이 지정된, 읽기 쉬운 버전 표시
+- 복잡성 점수별로 정렬된 태스크 표시 (높은 것부터 낮은 것까지)
+- 복잡성 분포 통계 제공 (낮음, 중간, 높음)
+- 임계값 점수에 기반하여 확장이 권장되는 태스크 강조
+- 각 복잡한 태스크에 대한 사용 가능한 확장 명령 포함
+- 보고서가 없는 경우 즉석에서 생성 제안
 
-### Smart Task Expansion
+### 스마트 태스크 확장
 
-The `expand` command automatically checks for and uses the complexity report:
+`expand` 명령은 자동으로 복잡성 보고서를 확인하고 사용합니다:
 
-When a complexity report exists:
+복잡성 보고서가 존재할 때:
 
-- Tasks are automatically expanded using the recommended subtask count and prompts
-- When expanding all tasks, they're processed in order of complexity (highest first)
-- Research-backed generation is preserved from the complexity analysis
-- You can still override recommendations with explicit command-line options
+- 태스크는 권장 서브태스크 수와 프롬프트를 사용하여 자동으로 확장됩니다
+- 모든 태스크를 확장할 때 복잡성 순서대로 처리됩니다 (가장 높은 것부터)
+- 복잡성 분석에서 연구 기반 생성이 보존됩니다
+- 명시적 명령줄 옵션으로 권장 사항을 재정의할 수 있습니다
 
-Example workflow:
+워크플로우 예시:
 
 ```bash
-# Generate the complexity analysis report with research capabilities
+# 연구 기능이 있는 복잡성 분석 보고서 생성
 task-master analyze-complexity --research
 
-# Review the report in a readable format
+# 읽기 쉬운 형식으로 보고서 검토
 task-master complexity-report
 
-# Expand tasks using the optimized recommendations
+# 최적화된 권장 사항을 사용하여 태스크 확장
 task-master expand --id=8
-# or expand all tasks
+# 또는 모든 태스크 확장
 task-master expand --all
 ```
 
-### Finding the Next Task
+### 다음 태스크 찾기
 
-The `next` command:
+`next` 명령은 다음을 수행합니다:
 
-- Identifies tasks that are pending/in-progress and have all dependencies satisfied
-- Prioritizes tasks by priority level, dependency count, and task ID
-- Displays comprehensive information about the selected task:
-  - Basic task details (ID, title, priority, dependencies)
-  - Implementation details
-  - Subtasks (if they exist)
-- Provides contextual suggested actions:
-  - Command to mark the task as in-progress
-  - Command to mark the task as done
-  - Commands for working with subtasks
+- 대기 중/진행 중이고 모든 종속성이 충족된 태스크 식별
+- 우선순위 수준, 종속성 수, 태스크 ID에 따라 태스크 우선순위 지정
+- 선택된 태스크에 대한 종합적인 정보 표시:
+  - 기본 태스크 세부 정보 (ID, 제목, 우선순위, 종속성)
+  - 구현 세부 정보
+  - 서브태스크 (있는 경우)
+- 상황에 맞는 제안 작업 제공:
+  - 태스크를 진행 중으로 표시하는 명령
+  - 태스크를 완료로 표시하는 명령
+  - 서브태스크 작업을 위한 명령
 
-### Viewing Specific Task Details
+### 특정 태스크 세부 정보 보기
 
-The `show` command:
+`show` 명령은 다음을 수행합니다:
 
-- Displays comprehensive details about a specific task or subtask
-- Shows task status, priority, dependencies, and detailed implementation notes
-- For parent tasks, displays all subtasks and their status
-- For subtasks, shows parent task relationship
-- Provides contextual action suggestions based on the task's state
-- Works with both regular tasks and subtasks (using the format taskId.subtaskId)
+- 특정 태스크 또는 서브태스크에 대한 종합적인 세부 정보 표시
+- 태스크 상태, 우선순위, 종속성 및 자세한 구현 노트 표시
+- 부모 태스크의 경우, 모든 서브태스크와 상태 표시
+- 서브태스크의 경우, 부모 태스크 관계 표시
+- 태스크의 상태에 기반한 상황별 작업 제안 제공
+- 일반 태스크와 서브태스크 모두에서 작동 (taskId.subtaskId 형식 사용)
 
-## Best Practices for AI-Driven Development
+## AI 주도 개발을 위한 모범 사례
 
-1. **Start with a detailed PRD**: The more detailed your PRD, the better the generated tasks will be.
+1. **자세한 PRD로 시작**: PRD가 자세할수록 생성된 태스크가 더 좋아집니다.
 
-2. **Review generated tasks**: After parsing the PRD, review the tasks to ensure they make sense and have appropriate dependencies.
+2. **생성된 태스크 검토**: PRD를 파싱한 후, 태스크가 의미가 있고 적절한 종속성을 가지고 있는지 확인합니다.
 
-3. **Analyze task complexity**: Use the complexity analysis feature to identify which tasks should be broken down further.
+3. **태스크 복잡성 분석**: 복잡성 분석 기능을 사용하여 어떤 태스크를 더 세분화해야 하는지 식별합니다.
 
-4. **Follow the dependency chain**: Always respect task dependencies - the Cursor agent will help with this.
+4. **종속성 체인 따르기**: 항상 태스크 종속성을 존중합니다 - Cursor 에이전트가 이를 도울 것입니다.
 
-5. **Update as you go**: If your implementation diverges from the plan, use the update command to keep future tasks aligned with your current approach.
+5. **진행하면서 업데이트**: 구현이 계획에서 벗어나면 update 명령을 사용하여 향후 태스크를 현재 접근 방식과 일치시킵니다.
 
-6. **Break down complex tasks**: Use the expand command to break down complex tasks into manageable subtasks.
+6. **복잡한 태스크 분할**: expand 명령을 사용하여 복잡한 태스크를 관리 가능한 서브태스크로 분할합니다.
 
-7. **Regenerate task files**: After any updates to tasks.json, regenerate the task files to keep them in sync.
+7. **태스크 파일 재생성**: tasks.json을 업데이트한 후 태스크 파일을 재생성하여 동기화 상태를 유지합니다.
 
-8. **Communicate context to the agent**: When asking the Cursor agent to help with a task, provide context about what you're trying to achieve.
+8. **에이전트에게 컨텍스트 전달**: Cursor 에이전트에게 태스크 지원을 요청할 때, 달성하려는 목표에 대한 컨텍스트를 제공합니다.
 
-9. **Validate dependencies**: Periodically run the validate-dependencies command to check for invalid or circular dependencies.
+9. **종속성 검증**: 주기적으로 validate-dependencies 명령을 실행하여 잘못되거나 순환적인 종속성을 확인합니다.

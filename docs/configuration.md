@@ -1,13 +1,13 @@
-# Configuration
+# 설정
 
-Taskmaster uses two primary methods for configuration:
+Task Master는 두 가지 주요 설정 방법을 사용합니다:
 
-1.  **`.taskmasterconfig` File (Project Root - Recommended for most settings)**
+1.  **`.taskmasterconfig` 파일 (프로젝트 루트 - 대부분의 설정에 권장)**
 
-    - This JSON file stores most configuration settings, including AI model selections, parameters, logging levels, and project defaults.
-    - **Location:** This file is created in the root directory of your project when you run the `task-master models --setup` interactive setup. You typically do this during the initialization sequence. Do not manually edit this file beyond adjusting Temperature and Max Tokens depending on your model.
-    - **Management:** Use the `task-master models --setup` command (or `models` MCP tool) to interactively create and manage this file. You can also set specific models directly using `task-master models --set-<role>=<model_id>`, adding `--ollama` or `--openrouter` flags for custom models. Manual editing is possible but not recommended unless you understand the structure.
-    - **Example Structure:**
+    - 이 JSON 파일은 AI 모델 선택, 매개변수, 로깅 수준 및 프로젝트 기본값을 포함한 대부분의 설정을 저장합니다.
+    - **위치:** 이 파일은 `task-master models --setup` 대화형 설정을 실행할 때 프로젝트 루트 디렉토리에 생성됩니다. 일반적으로 초기화 시퀀스 중에 이 작업을 수행합니다. 모델에 따라 Temperature와 Max Tokens를 조정하는 것 외에는 이 파일을 수동으로 편집하지 마세요.
+    - **관리:** `task-master models --setup` 명령(또는 `models` MCP 도구)을 사용하여 이 파일을 대화식으로 생성하고 관리하세요. `task-master models --set-<role>=<model_id>`를 사용하여 특정 모델을 직접 설정할 수도 있으며, 사용자 지정 모델의 경우 `--ollama` 또는 `--openrouter` 플래그를 추가할 수 있습니다. 구조를 이해하지 않는 한 수동 편집은 가능하지만 권장하지 않습니다.
+    - **예시 구조:**
       ```json
       {
       	"models": {
@@ -42,57 +42,57 @@ Taskmaster uses two primary methods for configuration:
       }
       ```
 
-2.  **Environment Variables (`.env` file or MCP `env` block - For API Keys Only)**
-    - Used **exclusively** for sensitive API keys and specific endpoint URLs.
-    - **Location:**
-      - For CLI usage: Create a `.env` file in your project root.
-      - For MCP/Cursor usage: Configure keys in the `env` section of your `.cursor/mcp.json` file.
-    - **Required API Keys (Depending on configured providers):**
-      - `ANTHROPIC_API_KEY`: Your Anthropic API key.
-      - `PERPLEXITY_API_KEY`: Your Perplexity API key.
-      - `OPENAI_API_KEY`: Your OpenAI API key.
-      - `GOOGLE_API_KEY`: Your Google API key.
-      - `MISTRAL_API_KEY`: Your Mistral API key.
-      - `AZURE_OPENAI_API_KEY`: Your Azure OpenAI API key (also requires `AZURE_OPENAI_ENDPOINT`).
-      - `OPENROUTER_API_KEY`: Your OpenRouter API key.
-      - `XAI_API_KEY`: Your X-AI API key.
-    - **Optional Endpoint Overrides (in .taskmasterconfig):**
-      - `AZURE_OPENAI_ENDPOINT`: Required if using Azure OpenAI key.
-      - `OLLAMA_BASE_URL`: Override the default Ollama API URL (Default: `http://localhost:11434/api`).
+2.  **환경 변수 (`.env` 파일 또는 MCP `env` 블록 - API 키만 해당)**
+    - 민감한 API 키와 특정 엔드포인트 URL에 **전적으로** 사용됩니다.
+    - **위치:**
+      - CLI 사용: 프로젝트 루트에 `.env` 파일을 생성합니다.
+      - MCP/Cursor 사용: `.cursor/mcp.json` 파일의 `env` 섹션에 키를 구성합니다.
+    - **필요한 API 키 (구성된 제공자에 따라 다름):**
+      - `ANTHROPIC_API_KEY`: Anthropic API 키
+      - `PERPLEXITY_API_KEY`: Perplexity API 키
+      - `OPENAI_API_KEY`: OpenAI API 키
+      - `GOOGLE_API_KEY`: Google API 키
+      - `MISTRAL_API_KEY`: Mistral API 키
+      - `AZURE_OPENAI_API_KEY`: Azure OpenAI API 키 (`AZURE_OPENAI_ENDPOINT`도 필요)
+      - `OPENROUTER_API_KEY`: OpenRouter API 키
+      - `XAI_API_KEY`: X-AI API 키
+    - **선택적 엔드포인트 재정의 (.taskmasterconfig에서):**
+      - `AZURE_OPENAI_ENDPOINT`: Azure OpenAI 키를 사용하는 경우 필수
+      - `OLLAMA_BASE_URL`: 기본 Ollama API URL 재정의 (기본값: `http://localhost:11434/api`)
 
-**Important:** Settings like model ID selections (`main`, `research`, `fallback`), `maxTokens`, `temperature`, `logLevel`, `defaultSubtasks`, `defaultPriority`, and `projectName` are **managed in `.taskmasterconfig`**, not environment variables.
+**중요:** 모델 ID 선택(`main`, `research`, `fallback`), `maxTokens`, `temperature`, `logLevel`, `defaultSubtasks`, `defaultPriority` 및 `projectName`과 같은 설정은 환경 변수가 아닌 **`.taskmasterconfig`에서 관리**됩니다.
 
-## Example `.env` File (for API Keys)
+## `.env` 파일 예시 (API 키용)
 
 ```
-# Required API keys for providers configured in .taskmasterconfig
+# .taskmasterconfig에 구성된 제공자에 필요한 API 키
 ANTHROPIC_API_KEY=sk-ant-api03-your-key-here
 PERPLEXITY_API_KEY=pplx-your-key-here
 # OPENAI_API_KEY=sk-your-key-here
 # GOOGLE_API_KEY=AIzaSy...
-# etc.
+# 기타
 
-# Optional Endpoint Overrides
+# 선택적 엔드포인트 재정의
 # AZURE_OPENAI_ENDPOINT=https://your-azure-endpoint.openai.azure.com/
 # OLLAMA_BASE_URL=http://custom-ollama-host:11434/api
 ```
 
-## Troubleshooting
+## 문제 해결
 
-### Configuration Errors
+### 설정 오류
 
-- If Task Master reports errors about missing configuration or cannot find `.taskmasterconfig`, run `task-master models --setup` in your project root to create or repair the file.
-- Ensure API keys are correctly placed in your `.env` file (for CLI) or `.cursor/mcp.json` (for MCP) and are valid for the providers selected in `.taskmasterconfig`.
+- Task Master가 누락된 설정에 대한 오류를 보고하거나 `.taskmasterconfig`를 찾을 수 없는 경우, 프로젝트 루트에서 `task-master models --setup`을 실행하여 파일을 생성하거나 수정하세요.
+- API 키가 `.env` 파일(CLI용) 또는 `.cursor/mcp.json`(MCP용)에 올바르게 배치되어 있고 `.taskmasterconfig`에서 선택한 제공자에 대해 유효한지 확인하세요.
 
-### If `task-master init` doesn't respond:
+### `task-master init`이 응답하지 않는 경우:
 
-Try running it with Node directly:
+Node를 직접 사용하여 실행해 보세요:
 
 ```bash
 node node_modules/claude-task-master/scripts/init.js
 ```
 
-Or clone the repository and run:
+또는 저장소를 복제하고 실행:
 
 ```bash
 git clone https://github.com/eyaltoledano/claude-task-master.git
